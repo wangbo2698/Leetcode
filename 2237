@@ -1,0 +1,30 @@
+class Solution {
+    public Node copyRandomList(Node head) {
+
+        if(head == null) return null;
+        Node cur = head;
+        HashMap<Node, Node> map = new HashMap();
+        // 存储每个结点的新结点
+        while(cur != null){
+            map.put(cur, new Node(cur.val));
+            cur = cur.next;
+        }
+
+        cur = head; // 将 cur 指针重置为 head 头结点进行遍历
+
+        // 问题转化为 通过某种方式 将新结点按照旧结点的关系进行连线
+        // 由于要参照旧结点的关系 ---> 推出一定需要遍历原始链表
+        while(cur != null){
+            map.get(cur).next = map.get(cur.next);
+            map.get(cur).random = map.get(cur.random);
+            cur = cur.next;
+        }
+        // 返回头结点, 新链表的头结点也存储在 map中， 因此需要返回 map.get(head);!!!!  
+        return map.get(head);
+        
+    }
+}
+
+
+实现 copyRandomList 函数，复制一个复杂链表。在复杂链表中，每个节点除了有一个 next 指针指向下一个节点，还有一个 random 指针指向链表中的任意节点或者 null。
+
